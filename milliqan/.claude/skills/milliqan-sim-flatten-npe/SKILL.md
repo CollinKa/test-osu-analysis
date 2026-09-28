@@ -54,15 +54,33 @@ Output tree `t`: `eventID`, `runNumber`, `scint_*`, and per-PMT vectors `pmt_nPE
 
 ## 3. nPE distribution
 
+Use the user's macro `GetSlabFlatSimNpe.C` in this skill directory (copied from
+`README/SlabSimValidation/` on the `MacArmVer` branch of milliQanSim; the only
+changes are the input file as an argument and writing a ROOT file). Same env as step 2:
+
 ```bash
-python <this skill dir>/plot_npe.py <flat file> [--max-npe 50]
+root -l -b -q '<this skill dir>/GetSlabFlatSimNpe.C("<absolute path to flat file>")'
 ```
 
-Writes `<flat stem>_npe.png` (nPE per PMT hit, total nPE per event; log y) and
-`<flat stem>_npe.root` (those two plus nPE vs `pmt_chan`), and prints the event count,
-mean nPE per PMT, mean total per event, events with 0 PE, and an overflow warning if
-`--max-npe` is too low. Show the PNG to the user and state the QE used alongside
-every number -- nPE results are meaningless without it.
+It looks only at the bench PMTs, `pmt_chan` 18, 19, 20, 21 (in the Cd-109 bench sim
+these are every PMT hit), and makes:
 
-Loop over flat trees with `TTree::Draw` (as `plot_npe.py` does) or uproot; iterating
+| Histogram | Content |
+| --- | --- |
+| `sCh18AndCh19PerEvent` | per event, nPE summed over ch18 + ch19 (0 when neither fired) |
+| `sCh20AndCh21PerEvent` | per event, nPE summed over ch20 + ch21 |
+| `sAllChPerEvent` | per event, nPE summed over all four channels |
+| `hCh18NPE` ... `hCh21NPE` | nPE per hit in each channel |
+
+All are 20 bins over 0-20 nPE, sized for data-like QE (~0.2). Output is one file next
+to the input, `<flat stem>_npe.root`, holding the seven histograms plus the `cSAllCh`
+canvas, whose stats box shows underflow/overflow. No PNGs. It prints entries, mean and overflow per histogram; at QE = 1 events
+overflow 20 (Cd-109 centre, 1000 events: 7-8 for the pair sums, 109 for the
+4-channel sum). Keep the 0-20 binning and report the overflow count -- the histogram
+mean excludes overflow, so quote it alongside any mean. Ask before changing binning.
+
+Give the user the `_npe.root` path and the printed summary, and state the QE used alongside every number --
+nPE results are meaningless without it.
+
+Loop over flat trees in C++ (as the macro does), `TTree::Draw` or uproot; iterating
 `for e in tree` in PyROOT over these vector branches has segfaulted.

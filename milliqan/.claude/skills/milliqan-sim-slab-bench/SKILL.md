@@ -33,9 +33,10 @@ iso`) gammas with a user-defined energy histogram. Cd-109 is the active spectrum
 commented alternatives in the same file. For a non-default source, swap which block is
 commented and show the user the resulting lines before running.
 
-Rough cost on an M-series Mac: ~0.4 s/event including startup for small runs; time a
-1k-event run before promising how long 1M will take, and run large jobs in the
-background.
+Measured 2026-09-27 on an M-series Mac, Cd-109 at slab centre: 1000 events in 7 s
+(~7 ms/event, a few seconds of it startup), so 1M events is roughly 2 hours. Other
+sources (higher-energy gammas) will be slower; time a 1k run first and run large
+jobs in the background.
 
 ## 2. Build
 
