@@ -6,6 +6,12 @@ Simulation (local macOS, `CollinKa/milliQanSim` @ `MacArmGeant4P11`):
 - `milliqan-sim-slab-bench` -- build the Bench sim and run a slab source test (Cd-109 by default)
 - `milliqan-sim-flatten-npe` -- flatten a sim file with a QE rescale and plot the PMT nPE distribution
 
+Sim -> offline file (OSU T3 or UCSB cluster, not lxplus; milliQanSim @ `SlabPulseInjectLogNormalSPE`,
+milliqanOffline and MilliDAQ @ `SlabPulseInjectionSim`):
+
+- `milliqan-sim-to-offline-demo` -- Geant4 file -> pulse-injected waveforms (optional zero bias)
+  -> digitizer format -> offline file. Stages 2-3 not yet tested from the skill.
+
 Each skill names the code commit it was tested against in its **Code:** line and
 checks the user's clone against it before running. Update that line whenever a
 skill is revised for newer code.
