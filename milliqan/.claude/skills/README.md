@@ -10,7 +10,7 @@ Sim -> offline file (OSU T3 or UCSB cluster, not lxplus; milliQanSim @ `SlabPuls
 milliqanOffline and MilliDAQ @ `SlabPulseInjectionSim`):
 
 - `milliqan-sim-to-offline-demo` -- Geant4 file -> pulse-injected waveforms (optional zero bias)
-  -> digitizer format -> offline file. Stages 2-3 not yet tested from the skill.
+  -> digitizer format -> offline file. All stages tested on the OSU T3 (2026-10-19, no zero bias).
 
 Each skill names the code commit it was tested against in its **Code:** line and
 checks the user's clone against it before running. Update that line whenever a
